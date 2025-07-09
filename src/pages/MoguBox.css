@@ -1,0 +1,348 @@
+/* Updated MoguBox.css */
+
+.mogubox-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    min-height: 75vh;
+    background: linear-gradient(to bottom, #fefce8, #fef3c7);
+    animation: zoomin 0.5s ease;
+}
+
+@keyframes zoomin {
+    from {
+        transform: scale(0.95);
+        opacity: 0.5;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.mogubox-title {
+    font-family: 'Bangers', cursive;
+    font-size: 2.5rem;
+    color: #1f2937;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    animation: wiggle 1.5s infinite;
+}
+
+@keyframes wiggle {
+    0% {
+        transform: rotate(-1deg);
+    }
+
+    50% {
+        transform: rotate(1deg);
+    }
+
+    100% {
+        transform: rotate(-1deg);
+    }
+}
+
+.mogubox-subtext {
+    font-family: 'Comic Neue', cursive;
+    font-size: 1rem;
+    color: #374151;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    max-width: 480px;
+    line-height: 1.5;
+}
+
+.open-btn {
+    background: linear-gradient(135deg, #a855f7, #9333ea);
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.8rem 2rem;
+    font-family: 'Impact', sans-serif;
+    border: none;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background 0.2s ease;
+    animation: pulse 2s infinite;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.open-btn:disabled {
+    background-color: #ddd;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.open-btn:hover:not(:disabled) {
+    transform: scale(1.05);
+    background: #7e22ce;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 5px #fff;
+    }
+
+    50% {
+        box-shadow: 0 0 20px #c084fc;
+    }
+
+    100% {
+        box-shadow: 0 0 5px #fff;
+    }
+}
+
+.box-gif {
+    width: 200px;
+    margin-top: 2rem;
+    animation: bounce 1.2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.nft-reveal-box {
+    background: #fff8e1;
+    border: 4px dashed #fbbf24;
+    padding: 2rem;
+    margin-top: 3rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+    animation: fadein 0.5s ease-in-out;
+}
+
+.nft-reveal-box h3 {
+    font-size: 1.75rem;
+    color: #16a34a;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.nft-reveal-box img {
+    width: 180px;
+    margin-top: 1.5rem;
+    border: 3px solid #9333ea;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nft-reveal-box p {
+    font-size: 1.2rem;
+    color: #7c3aed;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.nft-reveal-box span {
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-style: italic;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.recent-rewards {
+    margin-top: 3rem;
+    background: #fdf4ff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.recent-rewards h4 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #7c3aed;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.recent-rewards ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-left: 6px solid #c084fc;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    transition: background 0.2s;
+}
+
+.reward-item img {
+    width: 60px;
+    border-radius: 0.5rem;
+    border: 2px solid #e9d5ff;
+}
+
+.reward-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.reward-item strong {
+    font-size: 1rem;
+    color: #4c1d95;
+}
+
+.reward-item p {
+    margin: 0;
+    color: #6d28d9;
+    font-size: 0.9rem;
+}
+
+.reward-item span {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+/* Optional rarity highlight */
+.rarity-common {
+    border-left-color: #9ca3af;
+}
+
+.rarity-rare {
+    border-left-color: #3b82f6;
+}
+
+.rarity-legendary {
+    border-left-color: #f59e0b;
+}
+
+
+
+.sticker {
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    transform: rotate(12deg);
+    background: #ef4444;
+    color: white;
+    padding: 5px 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 50%;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* MoguBox.css */
+
+.rarity-common {
+    color: #6B7280;
+    /* Gray */
+    background-color: #F3F4F6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.rarity-rare {
+    color: #2563EB;
+    /* Blue */
+    background-color: #DBEAFE;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.rarity-legendary {
+    color: #D97706;
+    /* Amber */
+    background-color: #FEF3C7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+
+.boost-badge {
+    display: inline-block;
+    background-color: #10B981;
+    /* Emerald */
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 8px;
+    margin-top: 4px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .mogubox-title {
+        font-size: 2rem;
+    }
+
+    .open-btn {
+        font-size: 1rem;
+        padding: 0.6rem 1.4rem;
+    }
+
+    .box-gif {
+        width: 150px;
+    }
+
+    .nft-img {
+        width: 120px;
+    }
+}
