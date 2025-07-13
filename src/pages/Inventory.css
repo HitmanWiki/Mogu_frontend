@@ -1,0 +1,85 @@
+/* src/pages/Inventory.css */
+
+.inventory-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.inventory-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #7c3aed;
+    margin-bottom: 2rem;
+}
+
+.boost-summary {
+    text-align: center;
+    font-size: 1.125rem;
+    color: #374151;
+    margin-bottom: 1.5rem;
+}
+
+.inventory-loading,
+.inventory-empty {
+    text-align: center;
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+.nft-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* exactly 2 columns */
+    gap: 2rem;
+    padding: 2rem;
+    justify-content: center;
+}
+
+
+
+.nft-card {
+    background-color: #ffffffd9;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nft-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.nft-image {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.nft-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.nft-rarity {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.nft-boost {
+    font-size: 0.9rem;
+    color: #059669;
+    margin-top: 0.25rem;
+}
+
+.nft-id {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 0.5rem;
+}

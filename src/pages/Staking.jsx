@@ -157,60 +157,58 @@ export default function Staking() {
     const timeLeft = unlockTime > currentTime ? unlockTime - currentTime : 0;
 
     return (
-        <div className="w-full max-w-2xl mx-auto mt-10 px-4 text-center">
+        <div className="staking-container">
             <motion.h2
-                className="text-4xl font-bold text-purple-700 mb-4"
+                className="staking-title"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
             >
                 🏦 MOGU Token Staking
             </motion.h2>
 
-            <p className="mb-4 text-gray-600">
+            <p className="staking-description">
                 Stake $MOGU to earn rewards. APY: <strong>{apy}%</strong>, Lock-in: <strong>{lockPeriod / 86400} days</strong>, Early Exit Penalty: <strong>{penalty}%</strong>
             </p>
-            <p className="mt-2 text-purple-700">
-                <span>Boost: {nftBoost.toFixed(2)}%</span>
+            <div className="boost-highlight">
+                🧬 Boost from NFT: <strong>{nftBoost.toFixed(2)}%</strong>
+            </div>
 
-            </p>
-            <button
-                onClick={applyBoost}
-                className="mt-4 bg-indigo-600 text-purple px-6 py-2 rounded-full hover:bg-indigo-700"
-            >
+            <button onClick={applyBoost} className="btn-boost">
                 Apply Boost to Contract
             </button>
 
 
-            <div className="bg-white rounded-xl shadow p-6 mb-6">
-                <p className="text-sm text-gray-500 mb-1">Your $MOGU Balance:</p>
-                <p className="text-xl font-semibold text-purple-800">{parseFloat(balance).toFixed(2)}</p>
+            <div className="card">
+                <p className="label">Your $MOGU Balance:</p>
+                <p className="value">{parseFloat(balance).toFixed(2)}</p>
 
                 <input
                     type="number"
                     placeholder="Amount to stake"
                     value={inputAmount}
                     onChange={(e) => setInputAmount(e.target.value)}
-                    className="mt-4 px-4 py-2 border rounded w-full"
+                    className="input"
                 />
                 <button onClick={stakeTokens} className="btn-stake">
                     ✅ Stake
                 </button>
             </div>
 
-            <div className="bg-white rounded-xl shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">📊 Your Staking Dashboard</h3>
+            <div className="card">
+                <h3 className="card-title">📊 Your Staking Dashboard</h3>
                 <p>🔒 Staked: <strong>{parseFloat(stakedAmount).toFixed(2)}</strong> $MOGU</p>
                 <p>🎁 Rewards Earned: <strong>{parseFloat(rewards).toFixed(2)}</strong> $MOGU</p>
                 <p>⏳ Time Left to Unlock: <strong>{secondsToDhms(timeLeft)}</strong></p>
-                <p className="text-sm text-gray-500 mt-2">
-                    {timeLeft > 0 ? `Withdrawing now will apply ${penalty}% penalty` : 'You can withdraw without penalty'}
+                <p className="info-note">
+                    {timeLeft > 0
+                        ? `Withdrawing now will apply ${penalty}% penalty`
+                        : 'You can withdraw without penalty'}
                 </p>
-                <button
-                    onClick={withdrawTokens}
-                    className="mt-4 bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600"
-                >
+
+                <button onClick={withdrawTokens} className="btn-withdraw">
                     Withdraw
                 </button>
+
                 {timeLeft > 0 && (
                     <button onClick={emergencyWithdraw} className="btn-emergency">
                         ⚠️ Emergency Withdraw (with penalty)

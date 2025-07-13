@@ -1,6 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Loader from './components/loader';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -37,6 +41,7 @@ export default function App() {
         }
     };
 
+
     const disconnectWallet = () => {
         setWalletAddress(null);
         toast.info("👋 Wallet disconnected.");
@@ -45,37 +50,53 @@ export default function App() {
     const shortenAddress = (addr) =>
         addr ? `${addr.slice(0, 6)}...${addr.slice(-4)}` : '';
 
+    const location = useLocation();
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 800); // Simulate route loading delay (or fetch real data timing)
+
+        return () => clearTimeout(timer);
+    }, [location.pathname]);
+
+
     return (
-        <Router>
-            <div className="min-h-screen flex flex-col bg-gradient-to-b from-yellow-50 to-orange-100 font-sans">
-                <header className="bg-white shadow-md sticky top-0 z-50">
-                    <div className="header-container">
-                        <div className="nav-left">
-                            <Link to="/" className="flex items-center">
-                                <img src={LogoBear} alt="Mogu Logo" className="logo-img" />
-                                <span className="font-extrabold text-xl text-gray-800 ml-2">MOGUBOX</span>
-                            </Link>
-                            <nav className="nav-links text-gray-700 text-sm">
-                                <Link to="/staking">Staking</Link>
-                                <Link to="/temple">Temple</Link>
-                                <Link to="/inventory">Inventory</Link>
-                            </nav>
-                        </div>
 
-                        <div className="nav-right">
-                            {walletAddress ? (
-                                <>
-                                    <span className="text-purple-700 font-semibold">{shortenAddress(walletAddress)}</span>
-                                    <button onClick={disconnectWallet} className="disconnect-btn">Disconnect</button>
-                                </>
-                            ) : (
-                                <button onClick={connectWallet} className="connect-btn">Connect Wallet</button>
-                            )}
-                        </div>
+        <div className="app-container">
+            <header className="app-header">
+                <div className="header-container">
+                    <div className="nav-left">
+                        <Link to="/" className="logo-wrapper">
+                            <img src={LogoBear} alt="Mogu Logo" className="logo-img" />
+                            <span className="logo-text">MOGUBOX</span>
+                        </Link>
+                        <nav className="nav-links">
+                            <Link to="/staking">Staking</Link>
+                            <Link to="/temple">Temple</Link>
+                            <Link to="/inventory">Inventory</Link>
+                        </nav>
                     </div>
-                </header>
 
-                <main className="flex-grow flex justify-center items-start px-4 pt-10">
+                    <div className="nav-right">
+                        {walletAddress ? (
+                            <>
+                                <span className="wallet-address">{shortenAddress(walletAddress)}</span>
+                                <button onClick={disconnectWallet} className="disconnect-btn">Disconnect</button>
+                            </>
+                        ) : (
+                            <button onClick={connectWallet} className="connect-btn">Connect Wallet</button>
+                        )}
+                    </div>
+                </div>
+            </header>
+
+            <main className="main-content">
+                {loading ? (
+                    <Loader />
+                ) : (
                     <Routes>
                         <Route path="/" element={<MoguBox />} />
                         <Route path="/home" element={<Home />} />
@@ -84,14 +105,14 @@ export default function App() {
                         <Route path="/inventory" element={<Inventory />} />
                         <Route path="/mogubox" element={<MoguBox />} />
                     </Routes>
-                </main>
+                )}
+            </main>
 
-                <footer className="bg-yellow-200 text-center py-4 text-sm text-gray-700">
-                    ✨ Built with memes & bears | © {new Date().getFullYear()} MOGUBOX | Long nose, longer rewards 🐻
-                </footer>
+            <footer className="app-footer">
+                ✨ Built with memes & bears | © {new Date().getFullYear()} MOGUBOX | Long nose, longer rewards 🐻
+            </footer>
 
-                <ToastContainer position="top-right" autoClose={3000} pauseOnHover draggable theme="colored" />
-            </div>
-        </Router>
+            <ToastContainer position="top-right" autoClose={3000} pauseOnHover draggable theme="colored" />
+        </div>
     );
 }

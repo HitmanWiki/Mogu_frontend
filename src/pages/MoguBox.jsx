@@ -158,24 +158,24 @@ export default function MoguBox() {
     }
 
     return (
-        <div className="flex flex-col items-center mt-12 w-full max-w-xl relative px-4">
+        <div className="mogubox-container">
             {showConfetti && <Confetti numberOfPieces={250} recycle={false} />}
 
             <motion.h2
-                className="text-4xl font-extrabold mb-2 text-purple-800 drop-shadow"
+                className="mogubox-title"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
             >
                 🎁 Open a MOGUBOX
             </motion.h2>
 
-            <p className="mb-6 text-center text-purple-700">
+            <p className="mogubox-description">
                 Spend <span className="font-semibold text-purple-600">$MOGU</span> to win NFTs and boost your staking rewards.
             </p>
 
             <motion.button
                 onClick={openBox}
-                className="bg-yellow-400 text-purple px-6 py-3 rounded-full text-lg font-bold shadow-lg hover:bg-yellow-500 transition duration-300"
+                className="btn-open-box"
                 disabled={isOpening}
                 whileTap={{ scale: 0.95 }}
             >
@@ -183,9 +183,9 @@ export default function MoguBox() {
             </motion.button>
 
             {isOpening && (
-                <div className="mt-10 animate-bounce">
+                <div className="opening-animation">
                     <img src="/box.gif" alt="Opening box..." className="w-40 mx-auto" />
-                    <p className="text-sm text-gray-500 mt-2">Unleashing the mystery... 🎇</p>
+                    <p>Unleashing the mystery... 🎇</p>
                 </div>
             )}
 
@@ -197,10 +197,10 @@ export default function MoguBox() {
                     transition={{ type: 'spring', stiffness: 200 }}
                 >
                     <h3>🎉 Congrats! You minted:</h3>
-                    <img src={nftImage} alt="NFT" className="w-40 mx-auto mt-4" />
-                    <p className="text-xl font-semibold mt-2">{nftName}</p>
-                    <p className={`text-md font-medium mt-1 rarity-${nftRarity.toLowerCase()}`}>{nftRarity} Rarity</p>
-                    {nftBoost && <p className="text-sm text-green-600 mt-1">🔥Boost: {nftBoost}</p>}
+                    <img src={nftImage} alt="NFT" />
+                    <p className="text-xl">{nftName}</p>
+                    <p className={`rarity-${nftRarity.toLowerCase()}`}>{nftRarity} Rarity</p>
+                    {nftBoost && <p className="text-sm">🔥Boost: {nftBoost}</p>}
                 </motion.div>
             )}
 
@@ -211,7 +211,7 @@ export default function MoguBox() {
                 ) : (
                     <ul className="rewards-list">
                         {recentRewards.map((reward, index) => (
-                            <li key={index} className="reward-item flex items-center gap-3 p-3 bg-white rounded shadow mb-3">
+                            <li key={index} className="reward-item">
                                 <img
                                     src={reward.image}
                                     alt={reward.name}
@@ -219,10 +219,10 @@ export default function MoguBox() {
                                     onError={(e) => (e.target.src = "/placeholder.webp")} // fallback image
                                 />
                                 <div className="reward-info">
-                                    <p className="reward-name font-semibold text-lg">{reward.name}</p>
+                                    <p className="reward-name">{reward.name}</p>
                                     <p className={`reward-meta rarity-${reward.rarity.toLowerCase()}`}>{reward.rarity} Rarity</p>
                                     {reward.boost && (
-                                        <p className="reward-boost text-green-600 text-sm">🔥 {reward.boost}</p>
+                                        <p className="reward-boost">🔥 {reward.boost}</p>
                                     )}
                                 </div>
                             </li>

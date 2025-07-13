@@ -1,53 +1,77 @@
-// src/pages/Inventory.jsx
 import React, { useEffect, useState } from 'react';
 import { useWallet } from '../context/WalletContext';
 import axios from 'axios';
+import './Inventory.css';
+import { ethers } from 'ethers';
+import { useNFTBoost } from '../hooks/useNFTBoost';
 
 export default function Inventory() {
     const { walletAddress } = useWallet();
     const [nfts, setNfts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [signer, setSigner] = useState(null);
+
+    // ✅ Setup signer and pass it into useNFTBoost
+    useEffect(() => {
+        const initSigner = async () => {
+            if (window.ethereum && walletAddress) {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const _signer = await provider.getSigner();
+                setSigner(_signer);
+            }
+        };
+        initSigner();
+    }, [walletAddress]);
+
+    const { nftBoost } = useNFTBoost(signer, walletAddress); // ✅ Now works!
 
     useEffect(() => {
-        const loadNFTs = async () => {
-            if (!walletAddress) return;
+        if (!walletAddress) return;
 
+        const fetchNFTs = async () => {
             try {
                 setLoading(true);
-                const response = await axios.post('https://mogu-backend.vercel.app/api/inventory', {
+
+                const res = await axios.post('https://mogu-backend.vercel.app/api/inventory', {
                     wallet: walletAddress,
                 });
 
-                const nftList = response.data.nfts.map(nft => {
-                    const rarity = getRarity(nft.metadata);
-                    const boost = getBoostFromRarity(nft.metadata?.attributes);
+                const rawNFTs = res.data.nfts;
+
+                const defaultNfts = rawNFTs.map((nft, index) => {
+                    const tokenId = parseInt(nft.tokenId, 16);
+                    const defaultRarity = getDefaultRarity(index);
+                    const defaultBoost = getDefaultBoost(defaultRarity);
 
                     return {
-                        tokenId: parseInt(nft.tokenId, 16),
-                        name: nft.name,
+                        tokenId,
                         image: nft.image,
-                        rarity,
-                        boost,
+                        name: `MOGU NFT #${tokenId}`,
+                        rarity: defaultRarity,
+                        boost: defaultBoost,
                     };
                 });
 
-                setNfts(nftList);
+                setNfts(defaultNfts);
             } catch (err) {
-                console.error('Failed to load NFTs from backend:', err);
+                console.error('❌ Error fetching NFTs:', err);
             } finally {
                 setLoading(false);
             }
         };
 
-        loadNFTs();
+        fetchNFTs();
     }, [walletAddress]);
 
-    const getRarity = (metadata) =>
-        metadata?.attributes?.find(attr => attr.trait_type === 'rarity')?.value || 'Unknown';
+    const getDefaultRarity = (index) => {
+        if (index % 10 === 0) return 'Legendary';
+        if (index % 5 === 0) return 'Epic';
+        if (index % 3 === 0) return 'Rare';
+        return 'Common';
+    };
 
-    const getBoostFromRarity = (attributes = []) => {
-        const rarity = attributes?.find(attr => attr.trait_type === 'rarity')?.value?.toLowerCase();
-        switch (rarity) {
+    const getDefaultBoost = (rarity) => {
+        switch (rarity.toLowerCase()) {
             case 'legendary': return 20;
             case 'epic': return 15;
             case 'rare': return 10;
@@ -56,43 +80,39 @@ export default function Inventory() {
         }
     };
 
-    const totalBoost = nfts.reduce((acc, nft) => acc + nft.boost, 0);
-
     return (
-        <div className="max-w-7xl mx-auto p-6">
-            <h1 className="text-4xl font-bold text-center text-purple-700 mb-6">🎒 Your MOGU Inventory</h1>
+        <div className="inventory-container">
+            <h1 className="inventory-heading">🎒 Your MOGU Inventory</h1>
 
             {loading ? (
-                <p className="text-center text-gray-500">Loading NFTs...</p>
+                <p className="inventory-loading">Loading NFTs...</p>
             ) : nfts.length === 0 ? (
-                <p className="text-center text-gray-500">You don't own any MOGU NFTs yet.</p>
+                <p className="inventory-empty">You don't own any MOGU NFTs yet.</p>
             ) : (
                 <>
-                    <div className="text-center mb-6">
-                        <p className="text-lg text-gray-700">
-                            <strong>{nfts.length}</strong> NFTs owned • 🔋 Total Boost: <strong>{totalBoost}%</strong>
+                    <div className="boost-summary">
+                        <p>
+                            <strong>{nfts.length}</strong> NFTs owned • 🧬 Staking Boost: <strong>{nftBoost.toFixed(2)}%</strong>
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div className="nft-grid">
                         {nfts.map((nft, idx) => (
-                            <div
-                                key={idx}
-                                className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition transform hover:-translate-y-1 duration-300 p-4 text-center"
-                            >
+                            <div key={idx} className="nft-card">
                                 <img
                                     src={nft.image}
                                     alt={nft.name}
-                                    className="w-full h-48 object-contain rounded-lg mb-3"
+                                    className="nft-image"
+                                    onError={(e) => e.target.src = '/placeholder.webp'}
                                 />
-                                <h3 className="text-xl font-semibold text-gray-800">{nft.name}</h3>
-                                <p className="text-sm text-gray-600">
-                                    Rarity: <span className="font-bold text-purple-700">{nft.rarity}</span>
+                                <h3 className="nft-title">{nft.name}</h3>
+                                <p className="nft-rarity">
+                                    Rarity: <span>{nft.rarity}</span>
                                 </p>
-                                <p className="text-sm text-green-600">
-                                    🔋 Boost: <strong>{nft.boost}%</strong>
+                                <p className="nft-boost">
+                                    🧬 Boost: <strong>{nft.boost}%</strong>
                                 </p>
-                                <p className="text-xs text-gray-400 mt-1">Token ID: #{nft.tokenId}</p>
+                                <p className="nft-id">Token ID: #{nft.tokenId}</p>
                             </div>
                         ))}
                     </div>

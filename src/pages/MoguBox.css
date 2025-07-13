@@ -346,3 +346,206 @@
         width: 120px;
     }
 }
+
+/* General Wrapper */
+.mogubox-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: transparent;
+    /* remove card background */
+    box-shadow: none;
+    /* remove shadows */
+    border-radius: 0;
+    /* no radius */
+}
+
+/* Title */
+.mogubox-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #6b21a8;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px #ccc;
+}
+
+/* Description */
+.mogubox-description {
+    color: #7e22ce;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+/* Open Button */
+.btn-open-box {
+    background-color: #facc15;
+    color: #4c1d95;
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 9999px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-open-box:hover {
+    background-color: #fbbf24;
+}
+
+.btn-open-box:disabled {
+    background-color: #e4e4e4;
+    color: #999;
+    cursor: not-allowed;
+}
+
+/* Animation Container */
+.opening-animation {
+    margin-top: 2.5rem;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Box Reveal */
+.nft-reveal-box {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background-color: #fefce8;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.nft-reveal-box h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.nft-reveal-box img {
+    width: 160px;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+}
+
+.nft-reveal-box p {
+    margin-top: 0.5rem;
+}
+
+.nft-reveal-box .text-xl {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.rarity-common {
+    color: #6b7280;
+}
+
+.rarity-uncommon {
+    color: #22c55e;
+}
+
+.rarity-rare {
+    color: #3b82f6;
+}
+
+.rarity-epic {
+    color: #8b5cf6;
+}
+
+.rarity-legendary {
+    color: #f59e0b;
+}
+
+.rarity-mythic {
+    color: #ef4444;
+}
+
+/* Rewards Section */
+.recent-rewards {
+    margin-top: 3rem;
+    text-align: left;
+}
+
+.rewards-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #4c1d95;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.rewards-empty {
+    font-size: 0.95rem;
+    color: #6b7280;
+    text-align: center;
+}
+
+.rewards-list {
+    list-style: none;
+    padding: 0;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.65);
+    /* faint glassy look */
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.reward-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+.reward-info {
+    flex: 1;
+}
+
+.reward-name {
+    font-size: 1.1rem;
+    color: #1f2937;
+}
+
+.reward-meta {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.reward-boost {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    color: #16a34a;
+}
+
+/* Wallet Not Connected */
+.wallet-warning {
+    margin-top: 3rem;
+    text-align: center;
+    color: #b91c1c;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
