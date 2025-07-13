@@ -1,6 +1,6 @@
 // src/components/Loader.jsx
 import React from 'react';
-import './Loader.css';
+import './loader.css';
 import loaderImage from '../assets/logo.png'; // Use your static image here
 
 const Loader = () => {
