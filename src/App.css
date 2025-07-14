@@ -218,6 +218,50 @@ img.h-10 {
     max-width: auto;
 }
 
+.wallet-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.connect-btn {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 100;
+    min-width: 180px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    padding: 10px 15px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.dropdown-menu button:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+
 @media (max-width: 640px) {
     img.h-10 {
         height: 1.75rem;

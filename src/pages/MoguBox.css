@@ -78,6 +78,26 @@
     cursor: pointer;
 }
 
+
+.animated-logo {
+    width: 120px;
+    animation: bounce 1.8s infinite;
+    margin-top: 200px;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+
 .open-btn:disabled {
     background-color: #ddd;
     color: #999;

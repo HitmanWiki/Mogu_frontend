@@ -1,39 +1,37 @@
 // src/context/WalletContext.jsx
-
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ethers } from 'ethers';
+import React, { createContext, useContext, useState } from 'react';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 
 const WalletContext = createContext();
 
 export const WalletProvider = ({ children }) => {
-    const [walletAddress, setWalletAddress] = useState(null);
+    const { address: walletAddress } = useAccount();
+    const { connect, connectors } = useConnect();
+    const { disconnect } = useDisconnect();
+    const [showDropdown, setShowDropdown] = useState(false);
 
-    const detectWallet = async () => {
-        if (window.ethereum) {
-            const provider = new ethers.BrowserProvider(window.ethereum);
-            const accounts = await provider.send('eth_accounts', []);
-            if (accounts.length > 0) {
-                setWalletAddress(accounts[0]);
-            }
+    const toggleDropdown = () => setShowDropdown(!showDropdown);
+
+    const connectWith = (name) => {
+        const connector = connectors.find((c) => c.name === name);
+        if (connector) {
+            connect({ connector });
+            setShowDropdown(false);
+        } else {
+            alert(`${name} connector not available`);
         }
     };
 
-    useEffect(() => {
-        detectWallet();
-
-        if (window.ethereum) {
-            window.ethereum.on('accountsChanged', (accounts) => {
-                setWalletAddress(accounts.length > 0 ? accounts[0] : null);
-            });
-
-            window.ethereum.on('chainChanged', () => {
-                window.location.reload();
-            });
-        }
-    }, []);
-
     return (
-        <WalletContext.Provider value={{ walletAddress, setWalletAddress }}>
+        <WalletContext.Provider
+            value={{
+                walletAddress,
+                connectWith,
+                disconnectWallet: disconnect,
+                showDropdown,
+                toggleDropdown,
+            }}
+        >
             {children}
         </WalletContext.Provider>
     );

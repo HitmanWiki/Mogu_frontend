@@ -13,6 +13,7 @@ import Staking from './pages/Staking';
 import Temple from './pages/Temple';
 import Inventory from './pages/Inventory';
 import MoguBox from './pages/MoguBox';
+import { useRef } from 'react';
 
 import LogoBear from './assets/logo.png';
 import './App.css';
@@ -20,32 +21,33 @@ import './App.css';
 import { useWallet } from './context/WalletContext';
 
 export default function App() {
-    const { walletAddress, setWalletAddress } = useWallet();
-
-    const connectWallet = async () => {
-        try {
-            if (!window.ethereum) {
-                toast.error("🦊 Please install MetaMask!");
-                return;
-            }
-
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-            if (accounts.length > 0) {
-                setWalletAddress(accounts[0]);
-                toast.success("✅ Wallet connected!");
-            }
-        } catch (error) {
-            console.error(error);
-            toast.error("❌ Wallet connection failed.");
-        }
-    };
+    const { walletAddress, connectWith, disconnectWallet, showDropdown, toggleDropdown } = useWallet();
 
 
-    const disconnectWallet = () => {
-        setWalletAddress(null);
-        toast.info("👋 Wallet disconnected.");
-    };
+    // const connectWallet = async () => {
+    //     try {
+    //         if (!window.ethereum) {
+    //             toast.error("🦊 Please install MetaMask!");
+    //             return;
+    //         }
+
+    //         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+    //         if (accounts.length > 0) {
+    //             setWalletAddress(accounts[0]);
+    //             toast.success("✅ Wallet connected!");
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //         toast.error("❌ Wallet connection failed.");
+    //     }
+    // };
+
+
+    // const disconnectWallet = () => {
+    //     setWalletAddress(null);
+    //     toast.info("👋 Wallet disconnected.");
+    // };
 
     const shortenAddress = (addr) =>
         addr ? `${addr.slice(0, 6)}...${addr.slice(-4)}` : '';
@@ -79,7 +81,6 @@ export default function App() {
                             <Link to="/inventory">Inventory</Link>
                         </nav>
                     </div>
-
                     <div className="nav-right">
                         {walletAddress ? (
                             <>
@@ -87,9 +88,19 @@ export default function App() {
                                 <button onClick={disconnectWallet} className="disconnect-btn">Disconnect</button>
                             </>
                         ) : (
-                            <button onClick={connectWallet} className="connect-btn">Connect Wallet</button>
+                            <div className="wallet-dropdown">
+                                <button onClick={toggleDropdown} className="connect-btn">Connect Wallet</button>
+                                {showDropdown && (
+                                    <div className="dropdown-menu">
+                                        <button onClick={() => connectWith('MetaMask')}>MetaMask</button>
+                                        <button onClick={() => connectWith('WalletConnect')}>WalletConnect</button>
+                                    </div>
+                                )}
+                            </div>
                         )}
                     </div>
+
+
                 </div>
             </header>
 

@@ -4,6 +4,7 @@ import Confetti from 'react-confetti';
 import { toast } from 'react-toastify';
 import { checkMoguBalance } from '../utils/mogu';
 import { getMoguBoxContract } from '../utils/moguBoxContract';
+import LogoBear from '../assets/logo.png';
 
 
 import { useWallet } from '../context/WalletContext';
@@ -153,6 +154,7 @@ export default function MoguBox() {
                 <h2 className="text-2xl font-bold text-red-600">
                     ⚠️ Please connect your wallet to access the MOGUBOX!
                 </h2>
+                <img src={LogoBear} alt="MOGUBOX" className="animated-logo" />
             </div>
         );
     }
